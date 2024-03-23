@@ -1,0 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Fauna+One&display=swap');
+
+.button {
+    font-family: -apple-system, BlinkMacSystemFont, 'Fauna One', 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-size: 1em;
+    padding: .75em;
+    border-radius: .5em;
+    background-color: #FFD791;
+    box-shadow: 12px 12px 2px 1px #63326E;
+}

@@ -1,22 +1,18 @@
 import logo from './logo.svg';
+import Button from './components/Button';
+import SearchBar from './components/SearchBar';
 import './App.css';
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
+        <p className="header">
+          Stay informed, <span style={{textDecoration:'underline'}}>effortlessly.</span><br />
+          All your favorite news, <span style={{textDecoration:'underline'}}>unified.</span>
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <Button text="Curate your feed" />
+        <SearchBar search={() => {}} />
       </header>
     </div>
   );
