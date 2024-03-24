@@ -191,7 +191,6 @@ def news_search_bad():
         html_content = get_html_content(article.get("url", ""))
         text_content = extract_text(html_content)
         text_content = split_text_by_lines(text_content)
-        last_query = text_content
         wiki = TextBlob(text_content)
 
         article["polarity"] = wiki.sentiment.polarity
