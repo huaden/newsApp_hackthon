@@ -102,8 +102,8 @@ def news_search_good():
     kw_extractor = yake.KeywordExtractor()
     new_keywords = kw_extractor.extract_keywords(last_query)
 
-    # take TAKE_WORDS random words from the new keywords
-    new_keywords = random.sample(new_keywords, min(TAKE_WORDS, len(new_keywords)))
+    # take only the last TAKE_WORDS words
+    new_keywords = new_keywords[-TAKE_WORDS:]
     new_keywords = [keyword[0] for keyword in new_keywords]
     for keyword in new_keywords:
         if keyword not in keywords:
