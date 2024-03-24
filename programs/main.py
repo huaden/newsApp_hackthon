@@ -12,25 +12,25 @@ main = Blueprint('main', __name__)
 def index():
     return render_template('index.html')
 
-@main.route('/news')
+@main.route('/api/news')
 def get_news():
 
     NEWS_API_KEY = "8dd30d2b49b04f56956ac447dc30155b"
 
-    HEADLINES_NEWS = "https://newsapi.org/v2/top-headlines"
-    GENERAL_NEWS = "https://newsapi.org/v2/top-headlines?category=general&language=en&country=us"
-    BUSINESS_NEWS = "https://newsapi.org/v2/top-headlines?category=business&language=en&country=us"
-    SPORTS_NEWS = "https://newsapi.org/v2/top-headlines?category=sports&language=en&country=us"
-    ENTERTAINMENT_NEWS = "https://newsapi.org/v2/top-headlines?category=entertainment&language=en&country=us"
-    TECHNOLOGY_NEWS = "https://newsapi.org/v2/top-headlines?category=technology&language=en&country=us"
-    SEARCH_NEWS = "https://newsapi.org/v2/everything"
+    #HEADLINES_NEWS = "https://newsapi.org/v2/top-headlines"
+    #GENERAL_NEWS = "https://newsapi.org/v2/top-headlines?category=general&language=en&country=us"
+    #BUSINESS_NEWS = "https://newsapi.org/v2/top-headlines?category=business&language=en&country=us"
+    #SPORTS_NEWS = "https://newsapi.org/v2/top-headlines?category=sports&language=en&country=us"
+    #ENTERTAINMENT_NEWS = "https://newsapi.org/v2/top-headlines?category=entertainment&language=en&country=us"
+    #TECHNOLOGY_NEWS = "https://newsapi.org/v2/top-headlines?category=technology&language=en&country=us"
+    SEARCH_NEWS = "https://newsapi.org/v2/top-headlines"
 
     #news_type = request.args.get('type')
     #query = request.args.get('query')
     news_type = "technology"
     query = "politics"
 
-    if news_type == 'general':
+    """if news_type == 'general':
         url = GENERAL_NEWS
     elif news_type == 'business':
         url = BUSINESS_NEWS
@@ -44,21 +44,56 @@ def get_news():
         if not query:
             data =  jsonify({"error": "Query parameter is missing"}), 400
             return "hello world"
-        url = f"{SEARCH_NEWS}?q={query}"
+        url = f"{SEARCH_NEWS}?q={query}"""
+
+    
+    selected_categories = ["business"]#request.args.getlist('categories[]')
 
     params = {
-        "apiKey": NEWS_API_KEY,
-        "pageSize": 10
+        "pageSize": 10,
+        "language": "en",
+        "country": "us",
+        "category":','.join(selected_categories),
+        "apiKey": NEWS_API_KEY
     }
 
-    response = requests.get(url, params=params)
+    url = SEARCH_NEWS + '?' + '&'.join([f'{key}={value}' for key, value in params.items()])
+    response = requests.get(url)
+
+    if response.status_code != 200:
+        return jsonify({"error": "Failed to fetch news data"}), 500
+
+    return response
+
+
+@main.route("/news_query")
+def news_search():
+    NEWS_API_KEY = "8dd30d2b49b04f56956ac447dc30155b"
+
+    SEARCH_NEWS = "https://newsapi.org/v2/everything"
+
+    query = "bitcoin" #request.args.get('query')
+
+    if not query:
+        data =  jsonify({"error": "Query parameter is missing"}), 400
+        return "hello world"
+    params = {
+        "pageSize": 10,
+        "language": "en",
+        "q": query,
+        "sortBy": "relevancy",
+        "apiKey": NEWS_API_KEY
+    }
+
+    url = SEARCH_NEWS + '?' + '&'.join([f'{key}={value}' for key, value in params.items()])
+    print(url)
+    response = requests.get(url)
 
     if response.status_code != 200:
         return jsonify({"error": "Failed to fetch news data"}), 500
 
     data = response.json()
-    print(data)
-    return render_template('news.html', newsInfoData=data)
+    return data
 
     #business
     #entertainment
