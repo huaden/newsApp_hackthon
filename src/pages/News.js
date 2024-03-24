@@ -11,14 +11,26 @@ function News() {
 
 
   useEffect(() => {
-    fetchNewsData();
+    fetchNewsDataBad();
   }, []);
 
-  const fetchNewsData = async () => {
+  const fetchNewsDataGood = async () => {
     try {
       const queryVal = searchParams.get('query')
       console.log(queryVal);
-      const response = await fetch(`/news_query?query=${queryVal}`);
+      const response = await fetch(`/news_query_good?query=${queryVal}`);
+      const data = await response.json();
+      setNewsData(data);
+    } catch (error) {
+      console.error('Error fetching news data:', error);
+    }
+  };
+
+  const fetchNewsDataBad = async () => {
+    try {
+      const queryVal = searchParams.get('query')
+      console.log(queryVal);
+      const response = await fetch(`/news_query_bad?query=${queryVal}`);
       const data = await response.json();
       setNewsData(data);
     } catch (error) {
@@ -28,12 +40,15 @@ function News() {
 
   const handleLeftClick = async () => {
     // Fetch a new article when the left side is clicked
-    await fetchNewsData();
+    await fetchNewsDataBad();
   };
 
-  const handleRightClick = (url) => {
+  const handleRightClick = async (url) => {
     // Redirect to the article URL when the right side is clicked
     window.open(url, '_blank');
+
+    // Fetch a new article when the right side is clicked
+    await fetchNewsDataGood();
   };
 
   return (
