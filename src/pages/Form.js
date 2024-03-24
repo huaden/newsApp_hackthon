@@ -46,7 +46,7 @@ function Form() {
         <input type="text" value={name} onChange={handleNameChange} />
       </label>
       <div>
-        <p>Select categories:</p>
+        <p>What type of Information are you interested in:</p>
         <label>
           <input type="checkbox" value="Business" onChange={(e) => handleCategoryChange(e, setCategories1)} disabled={submitted} />
           Business
@@ -78,7 +78,7 @@ function Form() {
         {/* Add more category checkboxes here */}
       </div>
       <div>
-        <p>Select more categories:</p>
+        <p>What popular news service do you use currently:</p>
         <label>
           <input type="checkbox" value="New_York_Times" onChange={(e) => handleCategoryChange(e, setCategories2)} disabled={submitted} />
           New York Times
