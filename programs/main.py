@@ -104,17 +104,16 @@ def news_search():
 
     SEARCH_NEWS = "https://newsapi.org/v2/everything"
 
-    query = request.args.get('val', "bitcoin")
+    query = request.args.get('query', "bitcoin")
     print(query)
 
     if not query:
         data =  jsonify({"error": "Query parameter is missing"}), 400
         return "hello world"
     params = {
-        "pageSize": 10,
+        "pageSize": 1,
         "language": "en",
         "q": query,
-        "sortBy": "relevancy",
         "apiKey": NEWS_API_KEY
     }
 
@@ -139,6 +138,7 @@ def news_search():
         print(wiki.sentiment)
         print("\nTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTYTTTTTTTTTTTTTTTTTTTTTTTTTTT")
         print("\n")
+    print(data)
     return data
 
     #business

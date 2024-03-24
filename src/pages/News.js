@@ -18,7 +18,8 @@ function News() {
   const fetchNewsData = async () => {
     try {
       const queryVal = searchParams.get('query')
-      const response = await fetch(`/news_query?val=${queryVal}`);
+      console.log(queryVal);
+      const response = await fetch(`/news_query?query=${queryVal}`);
       const data = await response.json();
       setNewsData(data);
     } catch (error) {
@@ -63,7 +64,7 @@ function News() {
             </ul>
           </div>
         )}
-        <Link to='/' style={{paddingBottom: '1em'}}>
+        <Link to='/' style={{ paddingBottom: '1em' }}>
           <Button text='Go Back' />
         </Link>
       </header>
