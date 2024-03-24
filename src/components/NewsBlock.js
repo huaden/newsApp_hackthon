@@ -1,4 +1,5 @@
 import * as React from 'react';
+import '../pages/App.css';
 
 function NewsBlock({ title, description, source, polarity, subjectivity, url, urlToImage }) {
     const getPolarityColor = (polarity) => {
