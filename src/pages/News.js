@@ -2,10 +2,14 @@ import React, { useState, useEffect } from 'react';
 import Button from '../components/Button';
 import NewsBlock from '../components/NewsBlock';
 import { Link } from 'react-router-dom';
+import { useSearchParams } from "react-router-dom";
+
 
 function News() {
   const [newsData, setNewsData] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState("business");
+  const [searchParams, setSearchParams] = useSearchParams();
+  
 
   useEffect(() => {
     fetchNewsData();
@@ -13,7 +17,8 @@ function News() {
 
   const fetchNewsData = async () => {
     try {
-      const response = await fetch('/news_query');
+      const queryVal = searchParams.get('query')
+      const response = await fetch(`/news_query?val=${queryVal}`);
       const data = await response.json();
       setNewsData(data);
     } catch (error) {

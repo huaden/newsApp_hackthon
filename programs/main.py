@@ -104,7 +104,7 @@ def news_search():
 
     SEARCH_NEWS = "https://newsapi.org/v2/everything"
 
-    query = "bitcoin"
+    query = request.args.get('val', "bitcoin")
     print(query)
 
     if not query:
