@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import './components.css';
+import { useNavigate } from 'react-router-dom'
 
-const SearchBar = ({ onSearch }) => {
+const SearchBar = () => {
     const [searchTerm, setSearchTerm] = useState('');
+    const navigate = useNavigate();
+
 
     const handleSearch = (e) => {
         e.preventDefault();
@@ -11,7 +14,8 @@ const SearchBar = ({ onSearch }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        onSearch(searchTerm); // Call the onSearch function with the current searchTerm
+        navigate(`/news?query=${searchTerm}`);
+        //onSearch(searchTerm); // Call the onSearch function with the current searchTerm
     }
 
     return (

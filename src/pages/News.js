@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import Button from '../components/Button';
 import { Link } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 
 function News() {
   const [newsData, setNewsData] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState("business");
+  const [queryParameters] = useSearchParams();
 
   useEffect(() => {
     fetchNewsData();
@@ -12,7 +14,9 @@ function News() {
 
   const fetchNewsData = async () => {
     try {
-      const response = await fetch('/news_query');
+      const queryVal = queryParameters.get('query');
+      const response = await fetch('/news_query?query=${queryVal}');
+      console.log(queryVal)
       const data = await response.json();
       setNewsData(data);
     } catch (error) {

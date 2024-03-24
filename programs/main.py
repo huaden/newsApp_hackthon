@@ -104,7 +104,8 @@ def news_search():
 
     SEARCH_NEWS = "https://newsapi.org/v2/everything"
 
-    query = "bitcoin" #request.args.get('query')
+    query = request.args.get('query')
+    print(query)
 
     if not query:
         data =  jsonify({"error": "Query parameter is missing"}), 400
