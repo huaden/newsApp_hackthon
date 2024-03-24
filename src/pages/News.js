@@ -7,6 +7,7 @@ import { useSearchParams } from "react-router-dom";
 
 function News() {
   const [newsData, setNewsData] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState("business");
   const [searchParams, setSearchParams] = useSearchParams();
 
 
@@ -16,15 +17,26 @@ function News() {
 
   const fetchNewsData = async () => {
     try {
-      const queryVal = searchParams.get('query')
-      console.log(queryVal);
-      const response = await fetch(`/news_query?query=${queryVal}`);
-      const data = await response.json();
-      setNewsData(data);
+      const val = searchParams.get('val')
+      if (val == '0'){
+        const queryVal = searchParams.get('query')
+        console.log(queryVal);
+        const response = await fetch(`/news_query?query=${queryVal}`);
+        const data = await response.json();
+        setNewsData(data);
+      }
+      if (val == '1'){
+        const queryVal = searchParams.get('query')
+        console.log(queryVal);
+        const response = await fetch(`/news_query?query=${queryVal}`);
+        const data = await response.json();
+        setNewsData(data);
+      }
     } catch (error) {
       console.error('Error fetching news data:', error);
     }
   };
+
 
   const handleLeftClick = async () => {
     // Fetch a new article when the left side is clicked
