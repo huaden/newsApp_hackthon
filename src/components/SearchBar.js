@@ -14,7 +14,7 @@ const SearchBar = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        navigate(`/news?query=${searchTerm}&val=0`);
+        navigate(`/news?query=${searchTerm}`);
         //onSearch(searchTerm); // Call the onSearch function with the current searchTerm
     }
 

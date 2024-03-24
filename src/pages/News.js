@@ -7,7 +7,6 @@ import { useSearchParams } from "react-router-dom";
 
 function News() {
   const [newsData, setNewsData] = useState(null);
-  const [selectedCategory, setSelectedCategory] = useState("business");
   const [searchParams, setSearchParams] = useSearchParams();
 
 
@@ -57,7 +56,7 @@ function News() {
     <div className='App'>
       <header className='App-header'>
         <p className="header">Latest News</p>
-        {newsData && (
+        {newsData && newsData.articles && (
           <div>
             <ul>
               {newsData.articles.map((article, index) => (
