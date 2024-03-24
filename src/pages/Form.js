@@ -3,87 +3,111 @@ import { Link } from 'react-router-dom';
 import Button from '../components/Button';
 
 function Form() {
-  const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    message: ''
-  });
+  // State variables to store user responses
+  const [name, setName] = useState('');
+  const [categories1, setCategories1] = useState([]);
+  const [categories2, setCategories2] = useState([]);
+  const [submitted, setSubmitted] = useState(false);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prevState => ({
-      ...prevState,
-      [name]: value
-    }));
+  // Handler function for name input change
+  const handleNameChange = (event) => {
+    setName(event.target.value);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Send form data to backend for processing
-    console.log(formData);
-    // Optionally, you can send the form data to the backend using fetch or Axios
-    // Example:
-    // fetch('/api/submit-form', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json'
-    //   },
-    //   body: JSON.stringify(formData)
-    // })
-    // .then(response => response.json())
-    // .then(data => console.log(data))
-    // .catch(error => console.error('Error:', error));
+  // Handler function for category checkboxes change
+  const handleCategoryChange = (event, setCategories) => {
+    const { value, checked } = event.target;
+    if (!submitted) { // Allow changes only if form is not submitted
+      if (checked) {
+        setCategories(prevCategories => [...prevCategories, value]);
+      } else {
+        setCategories(prevCategories => prevCategories.filter(category => category !== value));
+      }
+    }
+  };
+
+  // Handler function for form submission
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    setSubmitted(true); // Mark form as submitted
+    // Combine all responses into an object and do something with it (e.g., send to server)
+    const responses = {
+      name,
+      categories1,
+      categories2
+    };
+    console.log(responses);
   };
 
   return (
-    <div className='App'>
-      <header className='App-header'>
-        <p className="header">Tell us about yourself!</p>
-        <form onSubmit={handleSubmit}>
-          <div>
-            <label>First Name:</label>
-            <input
-              type="text"
-              name="firstName"
-              value={formData.firstName}
-              onChange={handleChange}
-            />
-          </div>
-          <div>
-            <label>Last Name:</label>
-            <input
-              type="text"
-              name="lastName"
-              value={formData.lastName}
-              onChange={handleChange}
-            />
-          </div>
-          <div>
-            <label>Email:</label>
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-            />
-          </div>
-          <div>
-            <label>Message:</label>
-            <textarea
-              name="message"
-              value={formData.message}
-              onChange={handleChange}
-            ></textarea>
-          </div>
-          <Button type="submit" text="Submit" />
-        </form>
-        <Link to='/News'>
-          <Button text='Continue' />
-        </Link>
-      </header>
-    </div>
+    <form onSubmit={handleSubmit}>
+      <label>
+        Enter your name:
+        <input type="text" value={name} onChange={handleNameChange} />
+      </label>
+      <div>
+        <p>Select categories:</p>
+        <label>
+          <input type="checkbox" value="Business" onChange={(e) => handleCategoryChange(e, setCategories1)} disabled={submitted} />
+          Business
+        </label>
+        <label>
+          <input type="checkbox" value="Entertainment" onChange={(e) => handleCategoryChange(e, setCategories1)} disabled={submitted} />
+          Entertainment
+        </label>
+        <label>
+          <input type="checkbox" value="Technology" onChange={(e) => handleCategoryChange(e, setCategories1)} disabled={submitted} />
+          Technology
+        </label>
+        <label>
+          <input type="checkbox" value="Health" onChange={(e) => handleCategoryChange(e, setCategories1)} disabled={submitted} />
+          Health
+        </label>
+        <label>
+          <input type="checkbox" value="Science" onChange={(e) => handleCategoryChange(e, setCategories1)} disabled={submitted} />
+          Science
+        </label>
+        <label>
+          <input type="checkbox" value="Sports" onChange={(e) => handleCategoryChange(e, setCategories1)} disabled={submitted} />
+          Sports
+        </label>
+        <label>
+          <input type="checkbox" value="General" onChange={(e) => handleCategoryChange(e, setCategories1)} disabled={submitted} />
+          General
+        </label>
+        {/* Add more category checkboxes here */}
+      </div>
+      <div>
+        <p>Select more categories:</p>
+        <label>
+          <input type="checkbox" value="New_York_Times" onChange={(e) => handleCategoryChange(e, setCategories2)} disabled={submitted} />
+          New York Times
+        </label>
+        <label>
+          <input type="checkbox" value="The_Washington_Post" onChange={(e) => handleCategoryChange(e, setCategories2)} disabled={submitted} />
+          The Washington Post
+        </label>
+        <label>
+          <input type="checkbox" value="BBC" onChange={(e) => handleCategoryChange(e, setCategories2)} disabled={submitted} />
+          BBC
+        </label>
+        <label>
+          <input type="checkbox" value="CNN" onChange={(e) => handleCategoryChange(e, setCategories2)} disabled={submitted} />
+          CNN
+        </label>
+        <label>
+          <input type="checkbox" value="Fox_News" onChange={(e) => handleCategoryChange(e, setCategories2)} disabled={submitted} />
+          Fox News
+        </label>
+        <label>
+          <input type="checkbox" value="NBC" onChange={(e) => handleCategoryChange(e, setCategories2)} disabled={submitted} />
+          NBC
+        </label>
+        {/* Add more category checkboxes here */}
+      </div>
+      <button type="submit" disabled={submitted}>Submit</button>
+    </form>
   );
-}
+};
 
 export default Form;
