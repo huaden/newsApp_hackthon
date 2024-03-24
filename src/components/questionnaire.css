@@ -1,0 +1,14 @@
+.questionnaire-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .questionnaire-form {
+    text-align: center;
+  }
+  
+  .category-list {
+    margin-top: 20px;
+  }
