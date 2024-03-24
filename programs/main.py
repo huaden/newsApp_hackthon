@@ -105,7 +105,9 @@ def news_search_good():
     # take only the last TAKE_WORDS words
     new_keywords = new_keywords[-TAKE_WORDS:]
     new_keywords = [keyword[0] for keyword in new_keywords]
-    keywords += new_keywords
+    for keyword in new_keywords:
+        if keyword not in keywords:
+            keywords.append(keyword)
 
     # adjust the length of the keywords
     adjust_length(keywords)
