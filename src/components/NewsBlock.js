@@ -58,7 +58,6 @@ function NewsBlock({ title, description, source, polarity, subjectivity, url, ur
                 <p style={{ color: getPolarityColor(polarity) }}>Polarity: <span style={{ textDecoration: 'underline' }}>{polarityToWord(polarity)}</span></p>
                 <p style={{ color: getSubjectivityColor(subjectivity) }}>Subjectivity: <span style={{ textDecoration: 'underline' }}>{subjectivityToWord(subjectivity)}</span></p>
             </div>
-            <a href={url} target="_blank" rel="noopener noreferrer">Read more</a>
         </div>
     );
 }

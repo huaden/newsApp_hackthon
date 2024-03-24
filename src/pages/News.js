@@ -7,7 +7,6 @@ import { useSearchParams } from "react-router-dom";
 
 function News() {
   const [newsData, setNewsData] = useState(null);
-  const [selectedCategory, setSelectedCategory] = useState("business");
   const [searchParams, setSearchParams] = useSearchParams();
 
 
@@ -27,10 +26,6 @@ function News() {
     }
   };
 
-  const handleCategoryChange = (category) => {
-    setSelectedCategory(category);
-  };
-
   const handleLeftClick = async () => {
     // Fetch a new article when the left side is clicked
     await fetchNewsData();
@@ -45,17 +40,6 @@ function News() {
     <div className='App'>
       <header className='App-header'>
         <p className="header">Latest News</p>
-        <div>
-          <select value={selectedCategory} onChange={(e) => handleCategoryChange(e.target.value)}>
-            <option value="business">Business</option>
-            <option value="entertainment">Entertainment</option>
-            <option value="general">General</option>
-            <option value="health">Health</option>
-            <option value="science">Science</option>
-            <option value="sports">Sports</option>
-            <option value="technology">Technology</option>
-          </select>
-        </div>
         {newsData && (
           <div>
             <ul>
@@ -66,7 +50,6 @@ function News() {
                     title={article.title}
                     description={article.description}
                     source={article.source.name}
-                    url={article.url}
                     polarity={article.polarity}
                     subjectivity={article.subjectivity}
                     urlToImage={article.urlToImage}
