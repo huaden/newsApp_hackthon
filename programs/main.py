@@ -1,14 +1,8 @@
-from flask import Blueprint, render_template, url_for, redirect, request, flash, abort, jsonify
+from flask import Blueprint, render_template, url_for, redirect, request, flash, abort, jsonify, session
 #from dotenv import NEWS_API_KEY, NEWSDATA_API_KEY, GUARDIAN_API_KEY, NEWYORKTIMES_API_KEY
 import requests
 from bs4 import BeautifulSoup
 from textblob import TextBlob
-
-
-
-
-
-
 
 def extract_text(html_content):
     # Parse the HTML content
@@ -110,10 +104,16 @@ def news_search():
     if not query:
         data =  jsonify({"error": "Query parameter is missing"}), 400
         return "hello world"
+    
+    # Get the current page number from the session, or default to 1
+    page = session.get('page', 1)
+
     params = {
         "pageSize": 1,
         "language": "en",
         "q": query,
+        "sortBy": "relevancy",
+        "page": page,
         "apiKey": NEWS_API_KEY
     }
 
@@ -139,6 +139,10 @@ def news_search():
         print("\nTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTYTTTTTTTTTTTTTTTTTTTTTTTTTTT")
         print("\n")
     print(data)
+
+    # Save the current page number to the session
+    session['page'] = page + 1
+
     return data
 
     #business
