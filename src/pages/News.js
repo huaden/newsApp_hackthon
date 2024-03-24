@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import Button from '../components/Button';
+import NewsBlock from '../components/NewsBlock';
 import { Link } from 'react-router-dom';
-import { useSearchParams } from 'react-router-dom';
 
 function News() {
   const [newsData, setNewsData] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState("business");
-  const [queryParameters] = useSearchParams();
 
   useEffect(() => {
     fetchNewsData();
@@ -14,9 +13,7 @@ function News() {
 
   const fetchNewsData = async () => {
     try {
-      const queryVal = queryParameters.get('query');
-      const response = await fetch('/news_query?query=${queryVal}');
-      console.log(queryVal)
+      const response = await fetch('/news_query');
       const data = await response.json();
       setNewsData(data);
     } catch (error) {
@@ -47,17 +44,21 @@ function News() {
           <div>
             <ul>
               {newsData.articles.map((article, index) => (
-                <li key={index}>
-                  <h3>{article.title}</h3>
-                  <p>{article.description}</p>
-                  <p>Source: {article.source.name}</p>
-                  <a href={article.url} target="_blank" rel="noopener noreferrer">Read more</a>
-                </li>
+                <NewsBlock
+                  key={index}
+                  title={article.title}
+                  description={article.description}
+                  source={article.source.name}
+                  url={article.url}
+                  polarity={article.polarity}
+                  subjectivity={article.subjectivity}
+                  urlToImage={article.urlToImage}
+                />
               ))}
             </ul>
           </div>
         )}
-        <Link to='/'>
+        <Link to='/' style={{paddingBottom: '1em'}}>
           <Button text='Go Back' />
         </Link>
       </header>

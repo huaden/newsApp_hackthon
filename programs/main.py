@@ -132,6 +132,10 @@ def news_search():
         text_content = extract_text(html_content)
         text_content = split_text_by_lines(text_content)
         wiki = TextBlob(text_content)
+
+        article["polarity"] = wiki.sentiment.polarity
+        article["subjectivity"] = wiki.sentiment.subjectivity
+
         print(wiki.sentiment)
         print("\nTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTYTTTTTTTTTTTTTTTTTTTTTTTTTTT")
         print("\n")
