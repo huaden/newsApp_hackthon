@@ -9,7 +9,7 @@ function News() {
   const [newsData, setNewsData] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState("business");
   const [searchParams, setSearchParams] = useSearchParams();
-  
+
 
   useEffect(() => {
     fetchNewsData();
@@ -31,6 +31,16 @@ function News() {
     setSelectedCategory(category);
   };
 
+  const handleLeftClick = async () => {
+    // Fetch a new article when the left side is clicked
+    await fetchNewsData();
+  };
+
+  const handleRightClick = (url) => {
+    // Redirect to the article URL when the right side is clicked
+    window.open(url, '_blank');
+  };
+
   return (
     <div className='App'>
       <header className='App-header'>
@@ -50,16 +60,19 @@ function News() {
           <div>
             <ul>
               {newsData.articles.map((article, index) => (
-                <NewsBlock
-                  key={index}
-                  title={article.title}
-                  description={article.description}
-                  source={article.source.name}
-                  url={article.url}
-                  polarity={article.polarity}
-                  subjectivity={article.subjectivity}
-                  urlToImage={article.urlToImage}
-                />
+                <div key={index} style={{ display: 'flex', flexDirection: 'row' }}>
+                  <div onClick={handleLeftClick} style={{ alignContent: 'center', cursor: 'pointer', padding: '1em', fontSize: '3em', color: 'red'}}>←</div>
+                  <NewsBlock
+                    title={article.title}
+                    description={article.description}
+                    source={article.source.name}
+                    url={article.url}
+                    polarity={article.polarity}
+                    subjectivity={article.subjectivity}
+                    urlToImage={article.urlToImage}
+                  />
+                  <div onClick={() => handleRightClick(article.url)} style={{ alignContent: 'center', cursor: 'pointer', padding: '1em', fontSize: '3em', color: 'green'}}>→</div>
+                </div>
               ))}
             </ul>
           </div>
