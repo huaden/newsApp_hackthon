@@ -7,6 +7,13 @@
     border-radius: .5em;
     background-color: #FFD791;
     box-shadow: 12px 12px 2px 1px rgba(0, 0, 255, .2);
+    transition: all 0.2s ease-in-out;
+}
+
+.button.hovered {
+    transform: scale(1.1);
+    box-shadow: 6px 6px 2px 1px rgba(0, 0, 255, .2);
+    background-color: #eea527;
 }
 
 .search {
