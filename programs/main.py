@@ -126,15 +126,11 @@ def news_search_good():
         data =  jsonify({"error": "Query parameter is missing"}), 400
         return "hello world"
 
-    # Reset page number to random number between 1 and 5
-    page = random.randint(1, 5)
-
     params = {
         "pageSize": 1,
         "language": "en",
         "q": query,
         "sortBy": "relevancy",
-        "page": page,
         "apiKey": NEWS_API_KEY
     }
     url = SEARCH_NEWS + '?' + '&'.join([f'{key}={value}' for key, value in params.items()])
@@ -157,8 +153,6 @@ def news_search_good():
         print("\nTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTYTTTTTTTTTTTTTTTTTTTTTTTTTTT")
         print("\n")
     print(data)
-    # Save the current page number to the session
-    session['page'] = page + 1
 
     return data
 
@@ -169,23 +163,19 @@ def news_search_bad():
     NEWS_API_KEY = "86592e745fc44d1588aadea623f8feab"
 
     SEARCH_NEWS = "https://newsapi.org/v2/everything"
-
-    query = request.args.get('query', 'bitcoin')
+    
+    # List of categories
+    categories = ['business', 'entertainment', 'general', 'health', 'science', 'sports', 'technology']
+    
+    # Select a random category
+    query = random.choice(categories)
     print(query)
-
-    if not query:
-        data =  jsonify({"error": "Query parameter is missing"}), 400
-        return "hello world"
-
-    # Set page number to 1 if not in session
-    page = session.get('page', 1)
 
     params = {
         "pageSize": 1,
         "language": "en",
         "q": query,
         "sortBy": "relevancy",
-        "page": page,
         "apiKey": NEWS_API_KEY
     }
     url = SEARCH_NEWS + '?' + '&'.join([f'{key}={value}' for key, value in params.items()])
@@ -208,7 +198,46 @@ def news_search_bad():
         print("\n TT")
         print("\n")
     print(data)
-    # Save the current page number to the session
-    session['page'] = page + 1
+
+    return data
+
+@main.route("/news_query_general")
+def news_search():
+    global last_query
+
+    NEWS_API_KEY = "86592e745fc44d1588aadea623f8feab"
+
+    SEARCH_NEWS = "https://newsapi.org/v2/everything"
+    
+    query = request.args.get("query", "")
+    print(query)
+
+    params = {
+        "pageSize": 1,
+        "language": "en",
+        "q": query,
+        "sortBy": "relevancy",
+        "apiKey": NEWS_API_KEY
+    }
+    url = SEARCH_NEWS + '?' + '&'.join([f'{key}={value}' for key, value in params.items()])
+    print(url)
+    response = requests.get(url)
+    if response.status_code != 200:
+        return jsonify({"error": "Failed to fetch news data"}), 500
+    data = response.json()
+    articles = data.get("articles", [])
+    for article in articles:
+        html_content = get_html_content(article.get("url", ""))
+        text_content = extract_text(html_content)
+        text_content = split_text_by_lines(text_content)
+        last_query = text_content
+        wiki = TextBlob(text_content)
+
+        article["polarity"] = wiki.sentiment.polarity
+        article["subjectivity"] = wiki.sentiment.subjectivity
+        print(wiki.sentiment)
+        print("\n TT")
+        print("\n")
+    print(data)
 
     return data

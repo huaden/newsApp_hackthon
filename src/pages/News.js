@@ -11,7 +11,7 @@ function News() {
 
 
   useEffect(() => {
-    fetchNewsDataBad();
+    fetchNewsData();
   }, []);
 
   const fetchNewsDataGood = async () => {
@@ -37,6 +37,18 @@ function News() {
       console.error('Error fetching news data:', error);
     }
   };
+
+  const fetchNewsData = async () => {
+    try {
+      const queryVal = searchParams.get('query')
+      console.log(queryVal);
+      const response = await fetch(`/news_query_general?query=${queryVal}`);
+      const data = await response.json();
+      setNewsData(data);
+    } catch (error) {
+      console.error('Error fetching news data:', error);
+    }
+  }
 
 
   const handleLeftClick = async () => {
