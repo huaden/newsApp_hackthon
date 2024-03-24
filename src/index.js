@@ -7,6 +7,7 @@ import {
 import './index.css';
 import Home from './pages/Home';
 import Form from './pages/Form';
+import News from './pages/News';
 import reportWebVitals from './reportWebVitals';
 
 const router = createBrowserRouter([
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
     path: "/form",
     element: <Form />,
   },
+  {
+    path: "/news",
+    element: <News />,
+  }
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
