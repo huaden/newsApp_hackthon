@@ -7,6 +7,7 @@ import { useSearchParams } from "react-router-dom";
 
 function News() {
   const [newsData, setNewsData] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState("business");
   const [searchParams, setSearchParams] = useSearchParams();
 
 
@@ -37,6 +38,7 @@ function News() {
       console.error('Error fetching news data:', error);
     }
   };
+
 
   const handleLeftClick = async () => {
     // Fetch a new article when the left side is clicked
