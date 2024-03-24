@@ -1,5 +1,4 @@
 from flask import Blueprint, render_template, url_for, redirect, request, flash, abort, jsonify
-from flask_login import login_required, current_user
 #from dotenv import NEWS_API_KEY, NEWSDATA_API_KEY, GUARDIAN_API_KEY, NEWYORKTIMES_API_KEY
 import requests
 
